@@ -6,3 +6,4 @@ B. Our conclusions from this practice are:
    In addition we can use this idea to check on someone's obscene habits.
 C. First we will use crontab to execute the script every one houre.
    To avoid repetition of certain links we will add an IF condition befor the printing in lines 12 that will check if the link we are trying to add is already exists in the results.csv file using "grep -Fxq"
+.
