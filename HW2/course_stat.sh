@@ -34,7 +34,6 @@ gcc -o prog.exe calc_statistics.o
 cat course_statistics.txt
 
 rm calc_statistics.o
-rm prog.exe
 rm calc_statistics.c
 
 cd ../
