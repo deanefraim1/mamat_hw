@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     FILE *fp_stats = NULL;
-    FILE *fp_grades =NULL;
-    fp_stats = fopen("course_statistics.txt", "w");
-    fp_grades = fopen("grades.txt", "r");
+    FILE *fp_grades = NULL;
+    fp_stats = fopen(argv[1], "w");
+    fp_grades = fopen(argv[2], "r");
     if((fp_stats == NULL) || (fp_grades == NULL)) {
         fprintf(stderr, "Error\n");
         return 1;

@@ -21,27 +21,17 @@ cut -d $'\t' -f 2 $1.txt > $1_stat/grades.txt
 
 sed -i '' '1d' $1_stat/grades.txt
 
-cp calc_statistics.c $1_stat
-
-cd $1_stat
-
 gcc -c -g -Wall calc_statistics.c
 
 gcc -o prog.exe calc_statistics.o
 
-./prog.exe
+#passing the c program the directory of the files
+./prog.exe ${1}_stat/course_statistics.txt ${1}_stat/grades.txt
+
+cd "$1_stat"
 
 cat course_statistics.txt
 
-rm calc_statistics.o
-rm calc_statistics.c
-
 cd ../
 
-
-
-
-
-
-
-
+rm calc_statistics.o
