@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# check if the argument is a valid course number
+# check if the argument is a valid course number.
 if ( [[ $# -ne 1 ]] || [[ ! $1 =~ ^[0-9]+$ ]] ); then
 	echo "Wrong number of arguments" >&2
 	exit 1
