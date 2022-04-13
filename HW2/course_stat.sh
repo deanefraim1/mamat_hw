@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # check if the argument is a valid course number
-if ( [[ $# -ne 1 ]] || [[ ! $1 =~ ^[0-9]{6}$ ]] ); then
+if ( [[ $# -ne 1 ]] || [[ ! $1 =~ ^[0-9]+$ ]] ); then
 	echo "Wrong number of arguments" >&2
 	exit 1
 fi
@@ -25,8 +25,7 @@ gcc -c -g -Wall calc_statistics.c
 
 gcc -o prog.exe calc_statistics.o
 
-#passing the c program the directory of the files
-./prog.exe ${1}_stat/course_statistics.txt ${1}_stat/grades.txt
+./prog.exe "$1_stat/course_statistics.txt" "$1_stat/grades.txt"
 
 cd "$1_stat"
 
