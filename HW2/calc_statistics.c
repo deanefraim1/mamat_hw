@@ -133,8 +133,9 @@ void print(FILE *fp_stats, int students_num, float avg, int median,
     fprintf(fp_stats, "max grade = %d, min grade = %d\n", max_grade, min_grade);
     fprintf(fp_stats, "pass rate = %0.2f%%\n", pass_rate);
     for(int i=0; i<SIZE; i++) {
-        for(int j=0; j<SIZE; j++) {
-            fprintf(fp_stats, "%d ", hist[i][j]);
+        fprintf(fp_stats, "%d", hist[i][0]);
+        for(int j=1; j<SIZE; j++) {
+            fprintf(fp_stats, " %d", hist[i][j]);
         }
         fprintf(fp_stats, "\n");
     }
