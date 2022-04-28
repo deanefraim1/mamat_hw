@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# check if the argument is a valid course number.
+# check if the argument is a valid course number
 if ( [[ $# -ne 1 ]] || [[ ! $1 =~ ^[0-9]+$ ]] ); then
 	echo "Wrong number of arguments" >&2
 	exit 1
@@ -19,7 +19,7 @@ mkdir "$1_stat"
 
 cut -d $'\t' -f 2 $1.txt > $1_stat/grades.txt
 
-sed -i '' '1d' $1_stat/grades.txt
+sed -i -e '1d' $1_stat/grades.txt
 
 gcc -c -g -Wall calc_statistics.c
 
