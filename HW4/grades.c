@@ -194,11 +194,11 @@ int grades_print_student(struct grades *grades, int id){
     struct iterator* courses_it = list_begin(curr_student->courses_list);
     //if(courses_it == NULL) return FAIL;
     size_t course_num = list_size(curr_student->courses_list);
-    printf("%s %d: ", curr_student->student_name, curr_student->student_id);
+    printf("%s %d:", curr_student->student_name, curr_student->student_id);
     for(size_t i=0; i<course_num; i++){
         course* curr_course = (course*)list_get(courses_it);
         if(curr_course == NULL) return FAIL;
-        printf("%s %d", curr_course->course_name, curr_course->grade);
+        printf(" %s %d", curr_course->course_name, curr_course->grade);
         if(i != (course_num-1)) printf(", ");
         courses_it = (struct iterator*)list_next(courses_it);
         //if(courses_it == NULL) return FAIL;
