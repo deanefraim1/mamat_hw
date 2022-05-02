@@ -47,7 +47,7 @@ static int student_clone(void *element, void **output){
     new_student->student_name = (char*)malloc((strlen(student_data->student_name)+1)*sizeof(char));
     if(new_student->student_name == NULL) return FAIL;
     strcpy(new_student->student_name, student_data->student_name);
-    new_student->courses_list = student_data->courses_list;
+    new_student->courses_list = list_init(course_clone, course_destroy); //check
     *output = (void*)new_student;
     return SUCCESS;
 }
@@ -67,11 +67,13 @@ static void student_destroy(void *element){
     student* student_d = (student*)element;
     list_destroy(student_d->courses_list);
     free(student_d->student_name);
+    free(student_d);
 }
 
 static void course_destroy(void *element){
-        course* course_d = (course*)element;
-        free(course_d->course_name);
+    course* course_d = (course*)element;
+    free(course_d->course_name);
+    free(course_d);
 }
 
 struct grades* grades_init(void){
@@ -111,9 +113,16 @@ int grades_add_student(struct grades *grades, const char *name, int id){
     strcpy(new_name, name);
     new_student->student_name = new_name;
     new_student->student_id = id;
-    new_student->courses_list = list_init(course_clone, course_destroy);
+    new_student->courses_list = list_init(course_clone, course_destroy); //check
     if(new_student->courses_list == NULL) return FAIL;
-    return list_push_back(grades->students_list, new_student);
+    if(list_push_back(grades->students_list, new_student) == SUCCESS) {
+        student_destroy(new_student);
+        return SUCCESS;
+    }
+    else {
+        student_destroy(new_student);
+        return FAIL;
+    }
 }
 
 static student* course_exist(struct grades *grades, int id, const char *course_name){
@@ -143,8 +152,14 @@ int grades_add_grade(struct grades *grades, const char *name, int id, int grade)
     strcpy(new_name, name);
     new_course->course_name = new_name;
     new_course->grade = grade;
-    if(!list_push_back(curr_student->courses_list, new_course)) return SUCCESS;
-    return FAIL;
+    if(list_push_back(curr_student->courses_list, new_course) == SUCCESS) {
+        course_destroy(new_course);
+        return SUCCESS;
+    }
+    else {
+        course_destroy(new_course);
+        return FAIL;
+    }
 }
 
 float grades_calc_avg(struct grades *grades, int id, char **out){
