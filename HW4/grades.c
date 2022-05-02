@@ -105,6 +105,7 @@ static student* student_exist(struct grades *grades, int id){
 }
 
 int grades_add_student(struct grades *grades, const char *name, int id){
+    printf("`dasda");
     if(grades == NULL) return FAIL;
     if(student_exist(grades,id) != NULL) return FAIL;
     student* new_student = (student*)malloc(sizeof(student));
