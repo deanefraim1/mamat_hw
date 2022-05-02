@@ -170,7 +170,6 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
     strcpy(*out, curr_student->student_name);
     float sum = 0.0;
     struct iterator* courses_it = list_begin(curr_student->courses_list);
-    //if(courses_it == NULL) return FAIL;
     size_t course_num = list_size(curr_student->courses_list);
     if((courses_it == NULL) && (course_num != 0)) return FAIL;
     int counter = 0;
