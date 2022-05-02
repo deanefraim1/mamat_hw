@@ -170,7 +170,7 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
     *out = (char*)malloc(sizeof(char)*(strlen(curr_student->student_name)+1));
     if(*out == NULL) return FAIL;
     strcpy(*out, curr_student->student_name);
-    int sum = 0;
+    float sum = 0.0;
     struct iterator* courses_it = list_begin(curr_student->courses_list);
     //if(courses_it == NULL) return FAIL;
     size_t course_num = list_size(curr_student->courses_list);
@@ -183,7 +183,8 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
         //if(courses_it == NULL) return FAIL;
         counter++;
     }
-    return (float)sum/counter;
+    if(counter == 0) return 0.0;
+    else return (float)sum/counter;
 }
 
 int grades_print_student(struct grades *grades, int id){
@@ -202,7 +203,7 @@ int grades_print_student(struct grades *grades, int id){
         courses_it = (struct iterator*)list_next(courses_it);
         //if(courses_it == NULL) return FAIL;
     }
-    printf("/n");
+    printf("\n");
     return SUCCESS;
 }
 
