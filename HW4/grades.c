@@ -92,8 +92,8 @@ void grades_destroy(struct grades *grades){
 
 static student* student_exist(struct grades *grades, int id){
     struct iterator* students_it = (struct iterator*)list_begin(grades->students_list);
-    if(students_it == NULL) return NULL;
     size_t students_num = list_size(grades->students_list);
+    if((students_it == NULL) && (students_num != 0)) return NULL;
     for(size_t i=0; i<students_num; i++){
         student* curr_student = (student*)list_get(students_it);
         if(curr_student == NULL) return NULL;
@@ -129,8 +129,8 @@ static student* course_exist(struct grades *grades, int id, const char *course_n
     student* curr_student = student_exist(grades, id);
     if(curr_student == NULL) return NULL;
     struct iterator* courses_it = list_begin(curr_student->courses_list);
-    if(courses_it == NULL) return NULL;
     size_t course_num = list_size(curr_student->courses_list);
+    if((courses_it == NULL) && (course_num != 0)) return NULL;
     for(size_t i=0; i<course_num; i++){
         course* curr_course = (course*)list_get(courses_it);
         if(curr_course == NULL) return NULL;
@@ -170,8 +170,9 @@ float grades_calc_avg(struct grades *grades, int id, char **out){
     strcpy(*out, curr_student->student_name);
     float sum = 0.0;
     struct iterator* courses_it = list_begin(curr_student->courses_list);
-    if(courses_it == NULL) return FAIL;
+    //if(courses_it == NULL) return FAIL;
     size_t course_num = list_size(curr_student->courses_list);
+    if((courses_it == NULL) && (course_num != 0)) return FAIL;
     int counter = 0;
     for(size_t i=0; i<course_num; i++){
         course* curr_course = (course*)list_get(courses_it);
@@ -189,8 +190,8 @@ int grades_print_student(struct grades *grades, int id){
     student* curr_student = student_exist(grades, id);
     if(curr_student == NULL) return FAIL;
     struct iterator* courses_it = list_begin(curr_student->courses_list);
-    if(courses_it == NULL) return FAIL;
     size_t course_num = list_size(curr_student->courses_list);
+    if((courses_it == NULL) && (course_num != 0)) return FAIL;
     printf("%s %d:", curr_student->student_name, curr_student->student_id);
     for(size_t i=0; i<course_num; i++){
         course* curr_course = (course*)list_get(courses_it);
@@ -206,8 +207,8 @@ int grades_print_student(struct grades *grades, int id){
 int grades_print_all(struct grades *grades){
     if(grades == NULL) return FAIL;
     struct iterator* students_it = (struct iterator*)list_begin(grades->students_list);
-    if(students_it == NULL) return FAIL;
     size_t students_num = list_size(grades->students_list);
+    if((students_it == NULL) && (students_num != 0)) return FAIL;
     for(size_t i=0; i<students_num; i++){
         student* curr_student = (student*)list_get(students_it);
         if(curr_student == NULL) return FAIL;
