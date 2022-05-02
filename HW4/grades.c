@@ -60,6 +60,7 @@ static int course_clone(void *element, void **output){
     if(new_course->course_name == NULL) return FAIL;
     strcpy(new_course->course_name, course_data->course_name);
     new_course->grade = course_data->grade;
+    *output = (void*)new_course;
     return SUCCESS;
 }
 
