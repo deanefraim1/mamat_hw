@@ -13,9 +13,17 @@ String::String(const String &str) : data(NULL), length(str.length) {
     strcpy(this->data, str.data);
 }
 
-String::String(const char *str) : data(NULL), length(strlen(str)) {
-    this->data = new char[(this->length)+1];
-    strcpy(this->data, str);
+String::String(const char *str) {
+    if(str != NULL) {
+        this->length = strlen(str);
+        this->data = new char[(this->length)+1];
+        strcpy(this->data, str);
+    }
+    else {
+        this->length = 0;
+        this->data = new char[(this->length)+1];
+        *(this->data) = '\0';
+    }
 }
 
 String::~String() {
@@ -41,17 +49,19 @@ String& String::operator=(const char *str) {
 
 bool String::equals(const String &rhs) const {
     if(this->length != rhs.length) return false;
-    else if (strcmp(this->data, rhs.data)) return false;
+    else if (strcmp(this->data, rhs.data) != 0) return false;
     else return true;
 }
 
 bool String::equals(const char *rhs) const {
-    if (strcmp(this->data, rhs)) return false;
+    if (strcmp(this->data, rhs) != 0) return false;
     else return true;
 }
 
-void String::split(const char *delimiters, String **output, size_t *size) const{
-    char* curr_piece = strtok(this->data, delimiters);
+void String::split(const char *delimiters,
+                   String **output, size_t *size) const{
+    String clone_string_1 = *this;
+    char* curr_piece = strtok(clone_string_1.data, delimiters);
     int counter = 0;
     while(curr_piece != NULL) {
         counter++;
@@ -59,8 +69,9 @@ void String::split(const char *delimiters, String **output, size_t *size) const{
     }
     *size = (size_t)counter;
     if(output == NULL) return;
+    String clone_string_2 = *this;
     *output = new String[counter];
-    curr_piece = strtok(this->data, delimiters);
+    curr_piece = strtok(clone_string_2.data, delimiters);
     for(int i = 0; i<counter; i++) {
         (*output)[i] = curr_piece;
         curr_piece = strtok(NULL, delimiters);
@@ -70,13 +81,15 @@ void String::split(const char *delimiters, String **output, size_t *size) const{
 int String::to_integer() const { return atoi(this->data); }
 
 String String::trim() const {
-    int size = (int)strlen(this->data);
+    int size = (int)this->length;
     int start = 0, end = --size;
-    while((this->data)[start] == ' ') start++;
+    while(((this->data)[start]) == ' ') start++;
+    if(start == size) return String();
     while((this->data)[end] == ' ') end--;
     int trim_size = end-start+1;
     char* tmp_str = new char[trim_size+1];
     strncpy(tmp_str, (this->data)+start, trim_size);
+    tmp_str[trim_size]='\0';
     String new_string = String(tmp_str);
     delete[] tmp_str;
     return new_string;

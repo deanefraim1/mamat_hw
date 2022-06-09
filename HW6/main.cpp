@@ -1,11 +1,11 @@
 #include <iostream>
-#include <stdio.h>
-#include <stddef.h>
+#include <stdlib.h>
+#include "input.h"
 #include "string.h"
-#include <cstring>
+#include "field.h"
 #include "ip.h"
 #include "port.h"
-#include "input.h"
+
 
 extern int check_args(int, char**);
 extern void parse_input(Field&);
@@ -24,14 +24,14 @@ int main(int argc, char* argv[]) {
     String rule = rule_fields[1].trim();
     delete[] rule_fields;
     if(pattern.equals("src-ip") || pattern.equals("dst-ip")) {
-        Ip ip(pattern);
-        ip.set_value(rule);
-        parse_input(ip);
+        Ip ip_rule(pattern);
+        ip_rule.set_value(rule);
+        parse_input(ip_rule);
     }
     else if(pattern.equals("src-port") || pattern.equals("dst-port")) {
-        Port port(pattern);
-        port.set_value(rule);
-        parse_input(port);
+        Port port_rule(pattern);
+        port_rule.set_value(rule);
+        parse_input(port_rule);
     }
     return 0;
 }

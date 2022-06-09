@@ -6,7 +6,7 @@
 
 class Ip : public Field {
 private:
-    int start_ip, end_ip;
+    unsigned int start_ip, end_ip;
     bool match_value(String value) const;
 public:
     Ip(String pattern);

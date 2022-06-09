@@ -6,11 +6,12 @@
 
 class Port : public Field {
 private:
-    short start_port, end_port;
+    int start_port, end_port;
     bool match_value(String value) const;
 public:
     Port(String pattern);
     ~Port();
     bool set_value(String val);
 };
+
 #endif
